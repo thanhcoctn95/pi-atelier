@@ -9,4 +9,4 @@ Ask the questions one at a time, waiting for feedback on each question before co
 
 If a *fact* can be found by exploring the environment (filesystem, tools, etc.), look it up rather than asking me. The *decisions*, though, are mine — put each one to me and wait for my answer.
 
-Use `ask_user_question` for each decision, one question at a time, with the recommended answer. If the tool is unavailable, ask the same single question in chat. Do not act on it until I confirm we have reached a shared understanding.
+Do not act on it until I confirm we have reached a shared understanding.

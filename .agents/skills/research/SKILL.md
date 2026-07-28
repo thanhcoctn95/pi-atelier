@@ -3,7 +3,7 @@ name: research
 description: Investigate a question against high-trust primary sources and capture the findings as a Markdown file in the repo. Use when the user wants a topic researched, docs or API facts gathered, or reading legwork delegated to a background agent.
 ---
 
-Spin up a background project `researcher` through `subagent` to do the research, so you keep working while it reads. Pass `agentScope: "project"` and follow the shared orchestration and artifact contract in `AGENTS.md`.
+Spin up a **background agent** to do the research, so you keep working while it reads.
 
 Its job:
 

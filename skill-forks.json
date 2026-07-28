@@ -8,7 +8,7 @@
 			"sourceType": "github",
 			"skillPath": "skills/productivity/grilling/SKILL.md",
 			"upstreamHash": "368d3dd7251247c69f3656d93dc83c8f1577792eacac2111f1e7981db2ece49b",
-			"localHash": "39b1c65c0f2d765ff612391a57fbccc1adbcd017106ae9a195e6863bb83ea496"
+			"localHash": "44331dda57f461db4fec3f2efb6ddabe7aaaa0a57ae0f88a883bc61aed8a0587"
 		},
 		"grill-me": {
 			"path": ".agents/skills/grill-me/SKILL.md",
@@ -32,7 +32,7 @@
 			"sourceType": "github",
 			"skillPath": "skills/engineering/research/SKILL.md",
 			"upstreamHash": "bd3e2c6826671d82c86ed0da3dac3370ebcf63b0fe847f91bb444e1fb7dac21b",
-			"localHash": "2a8e45a479f3e6a32717a390724745f18e6e985a1cee17b80792dc7300e9049a"
+			"localHash": "af378829f015775a3bcd65ff466826722e99359017ae6bae227ca4c9bd14049c"
 		},
 		"implement": {
 			"path": ".agents/skills/implement/SKILL.md",
@@ -40,7 +40,7 @@
 			"sourceType": "github",
 			"skillPath": "skills/engineering/implement/SKILL.md",
 			"upstreamHash": "2139cfedf24791adbc839aaab6019cff158af1e28bfead020ec6e0ce01b3e74d",
-			"localHash": "78d51acc79365a2455bac2632dd9d3ed73418e5b8b9efb0da998e717ae0b45d6"
+			"localHash": "6d3fd9e83b8f36e5213854779db49b256a457a7ebb4a503e53fa7dcff696adc3"
 		},
 		"code-review": {
 			"path": ".agents/skills/code-review/SKILL.md",
@@ -48,7 +48,7 @@
 			"sourceType": "github",
 			"skillPath": "skills/engineering/code-review/SKILL.md",
 			"upstreamHash": "31d149a480eaa68c11e32f5ee77f0fd0b98a906834d531d881d502352edd0b8e",
-			"localHash": "c505fdde98c8e873606d99ebb778c715fa432241b307ab9c4d232e1729acf2a6"
+			"localHash": "6a65cc61114f96db07ec41e3920e67c9c5bf70dd6e0901eb9460ebcb2bdc209f"
 		},
 		"diagnosing-bugs": {
 			"path": ".agents/skills/diagnosing-bugs/SKILL.md",
