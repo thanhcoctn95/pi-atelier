@@ -2,20 +2,20 @@ Use available agent skills proactively whenever a request matches their purpose;
 
 ## Project-local orchestration
 
-This repository loads its development-agent stack only from `.pi/settings.json`. Do not modify `~/.pi/**`, do not persist credentials in the repository, and do not override the parent session's model. Project subagents are locked to `myapi/3party/gpt-5.6-sol`; a missing or unauthenticated model is a blocker, not a reason to fall back.
+This repository loads its development-agent stack only from `.pi/settings.json`. Do not modify `~/.pi/**`, do not persist credentials in the repository, and do not override the parent session's model. `planner`, `worker`, `reviewer`, `oracle`, and `delegate` use `myapi/3party/gpt-5.6-terra` with high thinking; `scout`, `researcher`, and `context-builder` use `myapi/3party/deepseek-v4-flash` without a thinking override. A missing or unauthenticated model is a blocker, not a reason to fall back.
 
 For every integrated flow, call `subagent` with `agentScope: "project"`. The package has no persistent `agentScope` setting, so omitting this field can admit user-global agents. Do not pass a per-run model override. Use these role contracts:
 
 | Role | Context | Thinking | Timeout | Contract |
 | --- | --- | --- | --- | --- |
-| `scout` | fresh | medium | 10 min | read-only local reconnaissance |
-| `researcher` | fresh | medium | 20 min | primary-source web/Context7 research |
+| `scout` | fresh | model default | 10 min | read-only local reconnaissance |
+| `researcher` | fresh | model default | 20 min | primary-source web/Context7 research |
 | `planner` | fork | high | 20 min | implementation plan, no mutation |
 | `worker` | fork | high | 30 min | the only code/file writer |
 | `reviewer` | fresh | high | 20 min | independent review and checks |
-| `context-builder` | fresh | high | 10 min | local context plus external docs when needed |
+| `context-builder` | fresh | model default | 10 min | local context plus external docs when needed |
 | `oracle` | fork | high | 20 min | decision consistency and diagnosis |
-| `delegate` | fresh | medium | 20 min | bounded read-only delegated work |
+| `delegate` | fresh | high | 20 min | bounded read-only delegated work |
 
 ### Invariants
 

@@ -57,7 +57,7 @@ Each smell reads *what it is* → *how to fix*; match it against the diff:
 
 ### 4. Spawn both sub-agents in parallel
 
-Send a single message with two `Agent` tool calls. Use the `general-purpose` subagent for both.
+Send one parallel `subagent` call with two fresh project `reviewer` tasks, one for each axis. Set `agentScope: "project"` and `output: false` on both tasks. Shell use is inspection-only and must not mutate the worktree; consume each report from its returned runtime artifact.
 
 **Standards sub-agent prompt** — include:
 

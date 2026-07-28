@@ -42,18 +42,18 @@ Nếu không biết nên bắt đầu ở đâu, dùng:
 
 ## Hợp đồng orchestration
 
-Mọi flow tích hợp gọi `subagent` với `agentScope: "project"`; `pi-subagents@0.37.2` không có setting persistent cho scope này. Parent session không bị khóa model. Tám role project dùng `myapi/3party/gpt-5.6-sol`; model khác bị `modelScope` từ chối và không có fallback.
+Mọi flow tích hợp gọi `subagent` với `agentScope: "project"`; `pi-subagents@0.37.2` không có setting persistent cho scope này. Parent session không bị khóa model. `planner`, `worker`, `reviewer`, `oracle`, và `delegate` dùng `myapi/3party/gpt-5.6-terra` với thinking `high`; `scout`, `researcher`, và `context-builder` dùng `myapi/3party/deepseek-v4-flash` không có thinking override. `defaultModel` là DeepSeek Flash; cả hai model nằm trong `modelScope` và không có fallback.
 
 | Role | Context | Thinking | Timeout | Chức năng |
 | --- | --- | --- | --- | --- |
-| `scout` | fresh | medium | 10 phút | local reconnaissance, read-only |
-| `researcher` | fresh | medium | 20 phút | primary-source web + Context7, read-only |
+| `scout` | fresh | mặc định model | 10 phút | local reconnaissance, read-only |
+| `researcher` | fresh | mặc định model | 20 phút | primary-source web + Context7, read-only |
 | `planner` | fork | high | 20 phút | kế hoạch triển khai, read-only |
 | `worker` | fork | high | 30 phút | writer duy nhất |
 | `reviewer` | fresh | high | 20 phút | review/check độc lập, read-only |
-| `context-builder` | fresh | high | 10 phút | context local + docs ngoài repo, read-only |
+| `context-builder` | fresh | mặc định model | 10 phút | context local + docs ngoài repo, read-only |
 | `oracle` | fork | high | 20 phút | kiểm tra quyết định/root cause, read-only |
-| `delegate` | fresh | medium | 20 phút | delegated task giới hạn, read-only |
+| `delegate` | fresh | high | 20 phút | delegated task giới hạn, read-only |
 
 `advisor` bị disable và watchdog project-wide tắt. Các batch read-only được chụp status/diff trước-sau; mutation ngoài `.pi-subagents/` hoặc output được khai báo làm flow fail closed và không tự restore. Chỉ một worker chạy tại một thời điểm. Lỗi transient được retry tối đa một lần với cùng model; task failure thông thường không retry mù.
 

@@ -32,7 +32,7 @@
 			"sourceType": "github",
 			"skillPath": "skills/engineering/research/SKILL.md",
 			"upstreamHash": "bd3e2c6826671d82c86ed0da3dac3370ebcf63b0fe847f91bb444e1fb7dac21b",
-			"localHash": "af378829f015775a3bcd65ff466826722e99359017ae6bae227ca4c9bd14049c"
+			"localHash": "79033791f8b0abbcd36642833d94a8258087bc1ad9f38c6ed30ad6fa8afba56e"
 		},
 		"implement": {
 			"path": ".agents/skills/implement/SKILL.md",
@@ -40,7 +40,7 @@
 			"sourceType": "github",
 			"skillPath": "skills/engineering/implement/SKILL.md",
 			"upstreamHash": "2139cfedf24791adbc839aaab6019cff158af1e28bfead020ec6e0ce01b3e74d",
-			"localHash": "6d3fd9e83b8f36e5213854779db49b256a457a7ebb4a503e53fa7dcff696adc3"
+			"localHash": "9ae2c901fefb7f366aa7d2969aca508e6687869601fc57ee619d10127a1466fc"
 		},
 		"code-review": {
 			"path": ".agents/skills/code-review/SKILL.md",
@@ -48,7 +48,7 @@
 			"sourceType": "github",
 			"skillPath": "skills/engineering/code-review/SKILL.md",
 			"upstreamHash": "31d149a480eaa68c11e32f5ee77f0fd0b98a906834d531d881d502352edd0b8e",
-			"localHash": "6a65cc61114f96db07ec41e3920e67c9c5bf70dd6e0901eb9460ebcb2bdc209f"
+			"localHash": "eb545821cf95097f4962f9c9ebaea466a56fe4f2155434542440a8e274b2a153"
 		},
 		"diagnosing-bugs": {
 			"path": ".agents/skills/diagnosing-bugs/SKILL.md",
@@ -80,7 +80,23 @@
 			"sourceType": "github",
 			"skillPath": "skills/engineering/wayfinder/SKILL.md",
 			"upstreamHash": "c9e18cefd77b6b5b0ee35f59ce2fd96359aa2d2f02e3479e12c873c5402d9d43",
-			"localHash": "257e40665b28ae959ffdcb97d7a72b074360f4a3d201bd84786505308546e434"
+			"localHash": "91ef376b49ae2b1f3ef200761fd24cb2d0e758b67ddc2ead7977b2bef2d04272"
+		},
+		"ask-matt": {
+			"path": ".agents/skills/ask-matt/SKILL.md",
+			"source": "mattpocock/skills",
+			"sourceType": "github",
+			"skillPath": "skills/engineering/ask-matt/SKILL.md",
+			"upstreamHash": "0f843160e34a24f5bd12cdc7de7d40951e77fbdc05ce8f891b37ca32eac2c44d",
+			"localHash": "386e5724702c81e791d8f67aba3f4be247096c2073a36ecc170f1a3c5506301a"
+		},
+		"improve-codebase-architecture": {
+			"path": ".agents/skills/improve-codebase-architecture/SKILL.md",
+			"source": "mattpocock/skills",
+			"sourceType": "github",
+			"skillPath": "skills/engineering/improve-codebase-architecture/SKILL.md",
+			"upstreamHash": "66e8a50c83c3c724fcfe0769701b665c56cec220cc4f49cc1aee8bdfc07de94a",
+			"localHash": "60d4fb40838c755ac4c7fadd2cac8dfc4e946ba2582d9f4ebcfd71b2a5ed9160"
 		}
 	}
 }

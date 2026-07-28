@@ -8,10 +8,10 @@
 		"npm:@upstash/context7-pi@0.1.2"
 	],
 	"subagents": {
-		"defaultModel": "myapi/3party/gpt-5.6-sol",
+		"defaultModel": "myapi/3party/deepseek-v4-flash",
 		"modelScope": {
 			"enforce": true,
-			"allow": ["myapi/3party/gpt-5.6-sol"]
+			"allow": ["myapi/3party/gpt-5.6-terra", "myapi/3party/deepseek-v4-flash"]
 		},
 		"watchdog": {
 			"enabled": false,
@@ -27,17 +27,17 @@
 		},
 		"agentOverrides": {
 			"scout": {
-				"model": "myapi/3party/gpt-5.6-sol",
+				"model": "myapi/3party/deepseek-v4-flash",
 				"fallbackModels": false,
-				"thinking": "medium",
 				"defaultContext": "fresh",
 				"acceptanceRole": "read-only",
-				"tools": ["read", "grep", "find", "ls", "bash"]
+				"tools": ["read", "grep", "find", "ls", "bash"],
+				"systemPromptMode": "append",
+				"systemPrompt": "Perform read-only local reconnaissance: map relevant files, symbols, tests, and constraints into a concise evidence-backed handoff. Shell use is inspection-only; never mutate the worktree."
 			},
 			"researcher": {
-				"model": "myapi/3party/gpt-5.6-sol",
+				"model": "myapi/3party/deepseek-v4-flash",
 				"fallbackModels": false,
-				"thinking": "medium",
 				"defaultContext": "fresh",
 				"acceptanceRole": "read-only",
 				"tools": [
@@ -47,36 +47,43 @@
 					"get_search_content",
 					"resolve-library-id",
 					"query-docs"
-				]
+				],
+				"systemPromptMode": "append",
+				"systemPrompt": "Perform read-only primary-source external research. For third-party APIs, use Context7 first, then official-web fallback; return a cited artifact and never mutate the worktree."
 			},
 			"planner": {
-				"model": "myapi/3party/gpt-5.6-sol",
+				"model": "myapi/3party/gpt-5.6-terra",
 				"fallbackModels": false,
 				"thinking": "high",
 				"defaultContext": "fork",
 				"acceptanceRole": "read-only",
-				"tools": ["read", "grep", "find", "ls"]
+				"tools": ["read", "grep", "find", "ls"],
+				"systemPromptMode": "append",
+				"systemPrompt": "Create a read-only implementation plan from approved requirements and context: exact files, ordered changes, validation, risks, and non-goals. Never mutate or make silent product decisions."
 			},
 			"worker": {
-				"model": "myapi/3party/gpt-5.6-sol",
+				"model": "myapi/3party/gpt-5.6-terra",
 				"fallbackModels": false,
 				"thinking": "high",
 				"defaultContext": "fork",
 				"acceptanceRole": "writer",
-				"tools": ["read", "grep", "find", "ls", "bash", "edit", "write", "contact_supervisor"]
+				"tools": ["read", "grep", "find", "ls", "bash", "edit", "write", "contact_supervisor"],
+				"systemPromptMode": "append",
+				"systemPrompt": "Be the sole writer: implement approved scope with targeted tests/checks and the smallest coherent diff; escalate unapproved decisions; report changed files and validation. Never commit unless explicitly requested."
 			},
 			"reviewer": {
-				"model": "myapi/3party/gpt-5.6-sol",
+				"model": "myapi/3party/gpt-5.6-terra",
 				"fallbackModels": false,
 				"thinking": "high",
 				"defaultContext": "fresh",
 				"acceptanceRole": "read-only",
-				"tools": ["read", "grep", "find", "ls", "bash"]
+				"tools": ["read", "grep", "find", "ls", "bash"],
+				"systemPromptMode": "append",
+				"systemPrompt": "Perform an independent read-only Standards or Spec review: inspect the actual diff and evidence, report file/line findings, make no edits, and keep the assigned axis separate."
 			},
 			"context-builder": {
-				"model": "myapi/3party/gpt-5.6-sol",
+				"model": "myapi/3party/deepseek-v4-flash",
 				"fallbackModels": false,
-				"thinking": "high",
 				"defaultContext": "fresh",
 				"acceptanceRole": "read-only",
 				"tools": [
@@ -90,23 +97,29 @@
 					"get_search_content",
 					"resolve-library-id",
 					"query-docs"
-				]
+				],
+				"systemPromptMode": "append",
+				"systemPrompt": "Read-only synthesize local repository context and external official docs when needed into compact implementation-ready context and a meta-prompt. Never mutate the worktree."
 			},
 			"oracle": {
-				"model": "myapi/3party/gpt-5.6-sol",
+				"model": "myapi/3party/gpt-5.6-terra",
 				"fallbackModels": false,
 				"thinking": "high",
 				"defaultContext": "fork",
 				"acceptanceRole": "read-only",
-				"tools": ["read", "grep", "find", "ls", "bash"]
+				"tools": ["read", "grep", "find", "ls", "bash"],
+				"systemPromptMode": "append",
+				"systemPrompt": "Act as a read-only decision-consistency and root-cause adviser: protect approved constraints, rank evidence and falsifiable hypotheses, flag drift, and never mutate the worktree."
 			},
 			"delegate": {
-				"model": "myapi/3party/gpt-5.6-sol",
+				"model": "myapi/3party/gpt-5.6-terra",
 				"fallbackModels": false,
-				"thinking": "medium",
+				"thinking": "high",
 				"defaultContext": "fresh",
 				"acceptanceRole": "read-only",
-				"tools": ["read", "grep", "find", "ls", "bash"]
+				"tools": ["read", "grep", "find", "ls", "bash"],
+				"systemPromptMode": "append",
+				"systemPrompt": "Perform bounded read-only delegated analysis or inspection. Stay within assigned scope, return concise evidence, and never mutate the worktree or spawn subagents."
 			},
 			"advisor": {
 				"disabled": true
