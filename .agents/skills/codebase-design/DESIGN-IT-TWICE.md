@@ -18,7 +18,7 @@ Show this to the user, then immediately proceed to Step 2. The user reads and th
 
 ### 2. Spawn sub-agents
 
-Spawn 3+ sub-agents in parallel using the Agent tool. Each must produce a **radically different** interface for the deepened module.
+Run one parallel `subagent` call with 3 or more fresh project `delegate` tasks, setting `agentScope: "project"`, `output: false` per task, and `timeoutMs: 1200000`. Each task is inspection-only and must not mutate the worktree; consume each returned runtime artifact. Before and after the batch, the parent captures and compares status plus diff, failing closed on any mutation. Each task must produce a **radically different** interface for the deepened module.
 
 Prompt each sub-agent with a separate technical brief (file paths, coupling details, dependency category from [DEEPENING.md](DEEPENING.md), what sits behind the seam). The brief is independent of the user-facing problem-space explanation in Step 1. Give each agent a different design constraint:
 

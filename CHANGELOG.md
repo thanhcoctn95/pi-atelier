@@ -6,6 +6,7 @@
 - Define specialized agent responsibilities, prompts, and tool boundaries for reconnaissance, research, planning, implementation, review, context building, advisory work, and delegation.
 - Bind supported Pi skills to project subagents with runtime artifacts, read-only mutation gates, and explicit no-auto-commit contracts.
 - Ignore JetBrains `.idea/` metadata and regenerable Pi runtime artifacts.
+- Align subordinate workflow docs/templates with Pi `/skill:*` commands and use project delegates for parallel design exploration.
 
 ## 0.5.0 — 2026-07-27
 
