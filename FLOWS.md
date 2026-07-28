@@ -42,7 +42,7 @@ Nếu không biết nên bắt đầu ở đâu, dùng:
 
 ## Hợp đồng orchestration
 
-Mọi flow tích hợp gọi `subagent` với `agentScope: "project"`; `pi-subagents@0.37.2` không có setting persistent cho scope này. Parent session không bị khóa model. `planner`, `worker`, `reviewer`, `oracle`, và `delegate` dùng `myapi/3party/gpt-5.6-terra` với thinking `high`; `scout`, `researcher`, và `context-builder` dùng `myapi/3party/deepseek-v4-flash` không có thinking override. `defaultModel` là DeepSeek Flash; cả hai model nằm trong `modelScope` và không có fallback.
+Mọi flow tích hợp gọi `subagent` với `agentScope: "project"`; `pi-subagents@0.37.2` không có setting persistent cho scope này. Parent session không bị khóa model. `planner`, `worker`, `reviewer`, `oracle`, và `delegate` dùng `myapi/3party/gpt-5.6-terra` với thinking `high`; `scout`, `researcher`, và `context-builder` dùng `myapi/3party/deepseek-v4-flash` không có thinking override. `defaultModel` là DeepSeek Flash; cả hai model nằm trong `modelScope` và không có fallback. `agentOverrides` không persist timeout, nên mỗi call phải truyền `timeoutMs` đúng role trong bảng.
 
 | Role | Context | Thinking | Timeout | Chức năng |
 | --- | --- | --- | --- | --- |

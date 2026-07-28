@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Add project-local pinned Pi workflow packages with routed subagents and model-scoped role configuration.
+- Define specialized agent responsibilities, prompts, and tool boundaries for reconnaissance, research, planning, implementation, review, context building, advisory work, and delegation.
+- Bind supported Pi skills to project subagents with runtime artifacts, read-only mutation gates, and explicit no-auto-commit contracts.
+- Ignore JetBrains `.idea/` metadata and regenerable Pi runtime artifacts.
+
 ## 0.5.0 — 2026-07-27
 
 - Keep fixed TTFT and TPS rows in the always-visible Activity panel, using `~` placeholders before values are available and `~`-marked live TPS estimates corrected from final usage when each response ends.

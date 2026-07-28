@@ -11,4 +11,4 @@ description: "Use when you need to resolve an in-progress git merge/rebase confl
 
 4. Discover the project's **automated checks** and run them — typically typecheck, then tests, then format. Fix anything the merge broke.
 
-5. **Finish the merge/rebase.** Stage everything and commit. If rebasing, continue the rebase process until all commits are rebased.
+5. **Finish the merge/rebase only with authorization.** After checks pass, ask for explicit user authorization before staging, committing, creating a branch, or advancing a rebase. If authorization is not given, report the resolved state and required next command; never abort the merge/rebase.

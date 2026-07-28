@@ -4,7 +4,7 @@ Use available agent skills proactively whenever a request matches their purpose;
 
 This repository loads its development-agent stack only from `.pi/settings.json`. Do not modify `~/.pi/**`, do not persist credentials in the repository, and do not override the parent session's model. `planner`, `worker`, `reviewer`, `oracle`, and `delegate` use `myapi/3party/gpt-5.6-terra` with high thinking; `scout`, `researcher`, and `context-builder` use `myapi/3party/deepseek-v4-flash` without a thinking override. A missing or unauthenticated model is a blocker, not a reason to fall back.
 
-For every integrated flow, call `subagent` with `agentScope: "project"`. The package has no persistent `agentScope` setting, so omitting this field can admit user-global agents. Do not pass a per-run model override. Use these role contracts:
+For every integrated flow, call `subagent` with `agentScope: "project"`. The package has no persistent `agentScope` setting, so omitting this field can admit user-global agents. Do not pass a per-run model override. `agentOverrides` cannot persist run timeouts, so every integrated call must also pass the role timeout from this table explicitly. Use these role contracts:
 
 | Role | Context | Thinking | Timeout | Contract |
 | --- | --- | --- | --- | --- |

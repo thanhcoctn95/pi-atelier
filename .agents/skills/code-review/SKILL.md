@@ -10,7 +10,7 @@ Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
 
 Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.
 
-The issue tracker should have been provided to you — run `/setup-matt-pocock-skills` if `docs/agents/issue-tracker.md` is missing.
+The issue tracker should have been provided to you — run `/skill:setup-matt-pocock-skills` if `docs/agents/issue-tracker.md` is missing.
 
 ## Process
 
@@ -57,7 +57,7 @@ Each smell reads *what it is* → *how to fix*; match it against the diff:
 
 ### 4. Spawn both sub-agents in parallel
 
-Send one parallel `subagent` call with two fresh project `reviewer` tasks, one for each axis. Set `agentScope: "project"` and `output: false` on both tasks. Shell use is inspection-only and must not mutate the worktree; consume each report from its returned runtime artifact.
+Capture `git status --porcelain=v1 --untracked-files=all` and the current diff before the batch, then fail closed if either changes afterward outside `.pi-subagents/`. Send one parallel `subagent` call with two fresh project `reviewer` tasks, one for each axis, each with `agentScope: "project"`, `timeoutMs: 1200000`, and `output: false`. Shell use is inspection-only and must not mutate the worktree; consume each report from its returned runtime artifact.
 
 **Standards sub-agent prompt** — include:
 
