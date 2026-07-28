@@ -1,0 +1,116 @@
+{
+	"enableSkillCommands": true,
+	"packages": [
+		"npm:pi-web-access@0.15.0",
+		"npm:@juicesharp/rpiv-ask-user-question@2.1.0",
+		"npm:pi-subagents@0.37.2",
+		"npm:@juicesharp/rpiv-todo@2.1.0",
+		"npm:@upstash/context7-pi@0.1.2"
+	],
+	"subagents": {
+		"defaultModel": "myapi/3party/gpt-5.6-sol",
+		"modelScope": {
+			"enforce": true,
+			"allow": ["myapi/3party/gpt-5.6-sol"]
+		},
+		"watchdog": {
+			"enabled": false,
+			"main": {
+				"enabled": false
+			},
+			"children": {
+				"enabled": false
+			},
+			"asyncCompletion": {
+				"enabled": false
+			}
+		},
+		"agentOverrides": {
+			"scout": {
+				"model": "myapi/3party/gpt-5.6-sol",
+				"fallbackModels": false,
+				"thinking": "medium",
+				"defaultContext": "fresh",
+				"acceptanceRole": "read-only",
+				"tools": ["read", "grep", "find", "ls", "bash"]
+			},
+			"researcher": {
+				"model": "myapi/3party/gpt-5.6-sol",
+				"fallbackModels": false,
+				"thinking": "medium",
+				"defaultContext": "fresh",
+				"acceptanceRole": "read-only",
+				"tools": [
+					"read",
+					"web_search",
+					"fetch_content",
+					"get_search_content",
+					"resolve-library-id",
+					"query-docs"
+				]
+			},
+			"planner": {
+				"model": "myapi/3party/gpt-5.6-sol",
+				"fallbackModels": false,
+				"thinking": "high",
+				"defaultContext": "fork",
+				"acceptanceRole": "read-only",
+				"tools": ["read", "grep", "find", "ls"]
+			},
+			"worker": {
+				"model": "myapi/3party/gpt-5.6-sol",
+				"fallbackModels": false,
+				"thinking": "high",
+				"defaultContext": "fork",
+				"acceptanceRole": "writer",
+				"tools": ["read", "grep", "find", "ls", "bash", "edit", "write", "contact_supervisor"]
+			},
+			"reviewer": {
+				"model": "myapi/3party/gpt-5.6-sol",
+				"fallbackModels": false,
+				"thinking": "high",
+				"defaultContext": "fresh",
+				"acceptanceRole": "read-only",
+				"tools": ["read", "grep", "find", "ls", "bash"]
+			},
+			"context-builder": {
+				"model": "myapi/3party/gpt-5.6-sol",
+				"fallbackModels": false,
+				"thinking": "high",
+				"defaultContext": "fresh",
+				"acceptanceRole": "read-only",
+				"tools": [
+					"read",
+					"grep",
+					"find",
+					"ls",
+					"bash",
+					"web_search",
+					"fetch_content",
+					"get_search_content",
+					"resolve-library-id",
+					"query-docs"
+				]
+			},
+			"oracle": {
+				"model": "myapi/3party/gpt-5.6-sol",
+				"fallbackModels": false,
+				"thinking": "high",
+				"defaultContext": "fork",
+				"acceptanceRole": "read-only",
+				"tools": ["read", "grep", "find", "ls", "bash"]
+			},
+			"delegate": {
+				"model": "myapi/3party/gpt-5.6-sol",
+				"fallbackModels": false,
+				"thinking": "medium",
+				"defaultContext": "fresh",
+				"acceptanceRole": "read-only",
+				"tools": ["read", "grep", "find", "ls", "bash"]
+			},
+			"advisor": {
+				"disabled": true
+			}
+		}
+	}
+}

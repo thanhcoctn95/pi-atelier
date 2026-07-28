@@ -1,26 +1,29 @@
 ---
 name: prototype
-description: Build a throwaway prototype to answer a design question. Use when the user wants to sanity-check whether a state model or logic feels right, or explore what a UI should look like.
+description: Build a throwaway prototype to answer a design question. Use to sanity-check a state model/logic or explore what a UI should look like.
 ---
 
 # Prototype
 
-A prototype is **throwaway code that answers a question**. The question decides the shape.
+A prototype is throwaway code that answers one explicit question. The parent orchestrates; one `worker` writes it; read-only agents plan and review it.
 
-## Pick a branch
+## Choose the branch
 
-Identify which question is being answered — from the user's prompt, the surrounding code, or by asking if the user is around:
+Determine the question from the request and surrounding code:
 
-- **"Does this logic / state model feel right?"** → [LOGIC.md](LOGIC.md). Build a tiny interactive terminal app that pushes the state machine through cases that are hard to reason about on paper.
-- **"What should this look like?"** → [UI.md](UI.md). Generate several radically different UI variations on a single route, switchable via a URL search param and a floating bottom bar.
+- **Does this logic/state model feel right?** Read [LOGIC.md](LOGIC.md). Build a small interactive terminal harness that exposes the full state after each action.
+- **What should this look like?** Read [UI.md](UI.md). Build several materially different UI variants on one route, switchable by the repository's normal mechanism.
 
-The two branches produce very different artifacts — getting this wrong wastes the whole prototype. If the question is genuinely ambiguous and the user isn't reachable, default to whichever branch better matches the surrounding code (a backend module → logic; a page or component → UI) and state the assumption at the top of the prototype.
+If genuinely ambiguous, ask one decision through `ask_user_question` with a recommendation; fall back to one chat question only when unavailable. If the user is unreachable, choose the branch best supported by the surrounding code and state the assumption.
 
-## Rules that apply to both
+## Orchestrated flow
 
-1. **Throwaway from day one, and clearly marked as such.** Locate the prototype code close to where it will actually be used (next to the module or page it's prototyping for) so context is obvious — but name it so a casual reader can see it's a prototype, not production. For throwaway UI routes, obey whatever routing convention the project already uses; don't invent a new top-level structure.
-2. **One command to run.** Whatever the project's existing task runner supports — `pnpm <name>`, `python <path>`, `bun <path>`, etc. The user must be able to start it without thinking.
-3. **No persistence by default.** State lives in memory. Persistence is the thing the prototype is _checking_, not something it should depend on. If the question explicitly involves a database, hit a scratch DB or a local file with a clear "PROTOTYPE — wipe me" name.
-4. **Skip the polish.** No tests, no error handling beyond what makes the prototype _runnable_, no abstractions. The point is to learn something fast.
-5. **Surface the state.** After every action (logic) or on every variant switch (UI), print or render the full relevant state so the user can see what changed.
-6. **Capture it when done.** Fold any validated decision into the real code, then capture the prototype itself as a **primary source**: commit it to a throwaway branch, out of main, and leave a context pointer to that branch on the implementation issue. Capture the answer too — the verdict and the question it settled — in the issue or a commit. The main branch keeps only the validated decision.
+1. Create a short `todo` list; use a text checklist only if unavailable. Capture the initial worktree status and diff.
+2. Use `scout` with fresh context, `agentScope: "project"`, `timeoutMs: 600000`, and `output: false` to find the correct local route/module, run command, conventions, and deletion boundary. Read its complete report from `details.results[0].artifactPaths.outputPath`. Its shell use is inspection-only. Validate the runtime artifact and enforce the read-only mutation gate.
+3. Use `planner` with fork context, `agentScope: "project"`, `timeoutMs: 1200000`, and file-only output to define the smallest artifact that can answer the question, the cases/variants to expose, one run command, and the observation/verdict format. A prototype plan must avoid production abstractions and persistence unless those are the question.
+4. Launch exactly one `worker` with fork context, `agentScope: "project"`, and `timeoutMs: 1800000`. It is the sole writer. Require clear `PROTOTYPE` naming, no hidden persistence, minimal error handling, full relevant state visibility, one run command, and no conversion into production code. New product/architecture decisions must go through `contact_supervisor`.
+5. Run a fresh-context `reviewer` with `agentScope: "project"`, `timeoutMs: 1200000`, and `output: false`; read its report from the returned runtime artifact. It checks only whether the artifact is runnable, visibly throwaway, safely isolated, and capable of answering the stated question. It must not request production polish. Shell commands are inspection/check-only. Enforce the mutation gate.
+6. Have the user react to the running prototype. Capture the question, observed evidence, verdict, and rejected direction. If changes are needed, route them to the same worker; never start a second concurrent writer.
+7. Preserve the validated decision, not prototype code, on the production branch. Follow the repository's throwaway-branch policy from the branch-specific guide; do not create a commit or branch unless the user explicitly asks.
+
+Retry once only for a classified transient/infrastructure failure with the same model. Missing orchestration, unauthorized read-only mutation, or an artifact that cannot answer the question fails closed.
