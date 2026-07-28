@@ -8,7 +8,7 @@
 			"sourceType": "github",
 			"skillPath": "skills/productivity/grilling/SKILL.md",
 			"upstreamHash": "368d3dd7251247c69f3656d93dc83c8f1577792eacac2111f1e7981db2ece49b",
-			"localHash": "44bf251aac9b3c4241b6b17776abfdb29ea86b466e53722af073fc22013dd049"
+			"localHash": "39b1c65c0f2d765ff612391a57fbccc1adbcd017106ae9a195e6863bb83ea496"
 		},
 		"grill-me": {
 			"path": ".agents/skills/grill-me/SKILL.md",
@@ -16,7 +16,7 @@
 			"sourceType": "github",
 			"skillPath": "skills/productivity/grill-me/SKILL.md",
 			"upstreamHash": "f361db4e15e6bfd562a9282b1dccda513910a50061f9e838ce017be9c69dde3f",
-			"localHash": "d32ceae9589f1c99ff1ed2ab6cd56ad9ff5e54c25246341c4aa0e492998d6082"
+			"localHash": "6189dfceb7304a6e5558f75d87e68fa3bc7fcf7ba120e44f21f8a61fe01eba54"
 		},
 		"grill-with-docs": {
 			"path": ".agents/skills/grill-with-docs/SKILL.md",
@@ -24,7 +24,7 @@
 			"sourceType": "github",
 			"skillPath": "skills/engineering/grill-with-docs/SKILL.md",
 			"upstreamHash": "9c460cbd94fd3c63cdef967dbdb6e66ca687103cdc380cd37834e4d10b738f78",
-			"localHash": "3a3c81abf23a2ca57386c8871157e2383910beb9577b3608b97402e71103c61f"
+			"localHash": "610d091047bcfb9db0f75c057d15538481a721111579fc5ec7f83ad9131a2165"
 		},
 		"research": {
 			"path": ".agents/skills/research/SKILL.md",
@@ -32,7 +32,7 @@
 			"sourceType": "github",
 			"skillPath": "skills/engineering/research/SKILL.md",
 			"upstreamHash": "bd3e2c6826671d82c86ed0da3dac3370ebcf63b0fe847f91bb444e1fb7dac21b",
-			"localHash": "cd3a141949887e45cd3b879c7e7ba38f4f737198e1e99e41d5d4cbe8340ce611"
+			"localHash": "2a8e45a479f3e6a32717a390724745f18e6e985a1cee17b80792dc7300e9049a"
 		},
 		"implement": {
 			"path": ".agents/skills/implement/SKILL.md",
@@ -40,7 +40,7 @@
 			"sourceType": "github",
 			"skillPath": "skills/engineering/implement/SKILL.md",
 			"upstreamHash": "2139cfedf24791adbc839aaab6019cff158af1e28bfead020ec6e0ce01b3e74d",
-			"localHash": "4c5e9f2adef3d98e88fc10f843802d5e9d4ae26ba414860ece47c10b5d27fa8c"
+			"localHash": "78d51acc79365a2455bac2632dd9d3ed73418e5b8b9efb0da998e717ae0b45d6"
 		},
 		"code-review": {
 			"path": ".agents/skills/code-review/SKILL.md",
@@ -48,7 +48,7 @@
 			"sourceType": "github",
 			"skillPath": "skills/engineering/code-review/SKILL.md",
 			"upstreamHash": "31d149a480eaa68c11e32f5ee77f0fd0b98a906834d531d881d502352edd0b8e",
-			"localHash": "2c72f8152481e8efbc8627286880a80f0c5701101e0880dcda53c5f1eb0b7451"
+			"localHash": "c505fdde98c8e873606d99ebb778c715fa432241b307ab9c4d232e1729acf2a6"
 		},
 		"diagnosing-bugs": {
 			"path": ".agents/skills/diagnosing-bugs/SKILL.md",
@@ -56,7 +56,7 @@
 			"sourceType": "github",
 			"skillPath": "skills/engineering/diagnosing-bugs/SKILL.md",
 			"upstreamHash": "fd6c99466b7ba43be624e6e66ed6d7af2796ded7218f24c83820823977819e22",
-			"localHash": "6a5d49e20859105cee5297826f471e4a2f66acab31ee5f60c527abab487da96e"
+			"localHash": "7a0779480f323a66d109404646bcc1a14bf0232b45b3e3ea93b652a035718acb"
 		},
 		"codebase-design": {
 			"path": ".agents/skills/codebase-design/SKILL.md",
@@ -64,7 +64,7 @@
 			"sourceType": "github",
 			"skillPath": "skills/engineering/codebase-design/SKILL.md",
 			"upstreamHash": "6d9d51d8caa01633fd00cf87089c5618c982321f942ac69f62565dc001c6b22f",
-			"localHash": "00fab95b7f17ad5424ed75df2578e54b152cfbe6e8ec3fb18c1a76ca38a55bba"
+			"localHash": "a8d50abac5a4018f60e1d911d4b6f4e36454ca14d6c390c0695a578c7de65dad"
 		},
 		"prototype": {
 			"path": ".agents/skills/prototype/SKILL.md",
@@ -72,7 +72,7 @@
 			"sourceType": "github",
 			"skillPath": "skills/engineering/prototype/SKILL.md",
 			"upstreamHash": "faba901c53a6ca245174c4ba5db3929d14253232b3050fdbd46539720adf1ab8",
-			"localHash": "dbec90eb74847bcaaf0d72fe4d493d9eb0423386eecf2ef0237eb1a8a63e8166"
+			"localHash": "03074862d4b6e4eaf472aa75146e1d193dd9e3bba0e4303a9b2425562d1d44cc"
 		},
 		"wayfinder": {
 			"path": ".agents/skills/wayfinder/SKILL.md",
@@ -80,7 +80,7 @@
 			"sourceType": "github",
 			"skillPath": "skills/engineering/wayfinder/SKILL.md",
 			"upstreamHash": "c9e18cefd77b6b5b0ee35f59ce2fd96359aa2d2f02e3479e12c873c5402d9d43",
-			"localHash": "417b0263a58db7c8848da0f090dedb5c694cf69d2dd044a167dc3e166a1cbf8f"
+			"localHash": "257e40665b28ae959ffdcb97d7a72b074360f4a3d201bd84786505308546e434"
 		}
 	}
 }
