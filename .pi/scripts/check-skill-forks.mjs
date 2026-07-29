@@ -1,10 +1,12 @@
 import { createHash } from "node:crypto";
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const manifestPath = path.join(root, "skill-forks.json");
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
+const bundleRoot = path.join(root, ".pi");
+const manifestPath = path.join(bundleRoot, "manifests", "skill-forks.json");
+const skillsRoot = path.join(bundleRoot, "skills");
 const errors = [];
 
 async function readJson(filePath, label) {
@@ -32,18 +34,64 @@ function resolveRepoPath(relativePath, label) {
 	return resolved;
 }
 
+function sortedKeys(value) {
+	return Object.keys(value ?? {}).sort();
+}
+
+function addSetDifference(label, expected, actual) {
+	for (const name of expected.filter((name) => !actual.includes(name))) {
+		errors.push(`${label}: missing '${name}'`);
+	}
+	for (const name of actual.filter((name) => !expected.includes(name))) {
+		errors.push(`${label}: unexpected '${name}'`);
+	}
+}
+
+async function discoverSkills() {
+	try {
+		const entries = await readdir(skillsRoot, { withFileTypes: true });
+		const names = [];
+		for (const entry of entries) {
+			if (!entry.isDirectory()) continue;
+			try {
+				await readFile(path.join(skillsRoot, entry.name, "SKILL.md"), "utf8");
+				names.push(entry.name);
+			} catch {
+				errors.push(`discovered skill '${entry.name}': missing readable .pi/skills/${entry.name}/SKILL.md`);
+			}
+		}
+		return names.sort();
+	} catch (error) {
+		errors.push(`cannot read .pi/skills: ${error.message}`);
+		return [];
+	}
+}
+
 const manifest = await readJson(manifestPath, "fork manifest");
 if (manifest.version !== 1) errors.push(`skill-forks.json: unsupported version ${String(manifest.version)}`);
 
 const lockPath = resolveRepoPath(manifest.lockFile, "skill-forks.json lockFile");
 const lock = lockPath ? await readJson(lockPath, "skills lock") : { skills: {} };
 const forks = manifest.forks;
-if (!forks || typeof forks !== "object" || Array.isArray(forks) || Object.keys(forks).length === 0) {
-	errors.push("skill-forks.json: forks must be a non-empty object");
+if (!forks || typeof forks !== "object" || Array.isArray(forks)) {
+	errors.push("skill-forks.json: forks must be an object");
 }
 
+const lockNames = sortedKeys(lock.skills);
+const forkNames = sortedKeys(forks);
+const discoveredNames = await discoverSkills();
+if (lockNames.length !== 22)
+	errors.push(`skills lock: expected exactly 22 skills, found ${lockNames.length}`);
+if (forkNames.length !== 22)
+	errors.push(`skill-forks.json: expected exactly 22 forks, found ${forkNames.length}`);
+if (discoveredNames.length !== 22)
+	errors.push(`.pi/skills: expected exactly 22 skills, found ${discoveredNames.length}`);
+addSetDifference("manifest compared with lock", lockNames, forkNames);
+addSetDifference("discovered skills compared with lock", lockNames, discoveredNames);
+
 const seenPaths = new Set();
-for (const [name, fork] of Object.entries(forks ?? {})) {
+for (const name of forkNames) {
+	const fork = forks[name];
 	const label = `fork '${name}'`;
 	if (!fork || typeof fork !== "object" || Array.isArray(fork)) {
 		errors.push(`${label}: entry must be an object`);
@@ -75,6 +123,8 @@ for (const [name, fork] of Object.entries(forks ?? {})) {
 		}
 	}
 
+	const expectedPath = `.pi/skills/${name}/SKILL.md`;
+	if (fork.path !== expectedPath) errors.push(`${label}: path must be ${expectedPath}`);
 	if (resolvedPath) {
 		try {
 			const content = await readFile(resolvedPath);
@@ -88,6 +138,7 @@ for (const [name, fork] of Object.entries(forks ?? {})) {
 	}
 }
 
+errors.sort();
 if (errors.length > 0) {
 	console.error("Skill fork guard failed:");
 	for (const error of errors) console.error(`- ${error}`);
@@ -97,4 +148,4 @@ if (errors.length > 0) {
 	process.exit(1);
 }
 
-console.log(`Skill forks verified (${Object.keys(forks).length} files)`);
+console.log("Skill forks verified (22 files)");

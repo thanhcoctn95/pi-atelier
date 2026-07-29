@@ -169,7 +169,7 @@ needs-triage
 
 Không triage lại ticket do `/skill:to-tickets` tạo; các ticket đó đã được chuẩn bị để triển khai.
 
-Issue tracker của repo là GitHub Issues và được thao tác qua `gh`, theo `docs/agents/issue-tracker.md`.
+Issue tracker của repo là GitHub Issues và được thao tác qua `gh`, theo `.pi/docs/agents/issue-tracker.md`.
 
 ## On-ramp: bug khó hoặc performance regression
 
@@ -313,9 +313,9 @@ Cung cấp nguyên tắc để viết skill nhất quán và dễ dự đoán.
 
 Thiết lập issue tracker, triage labels và cấu trúc domain docs mà các engineering workflow sử dụng. Repo này đã được cấu hình với:
 
-- GitHub Issues: `docs/agents/issue-tracker.md`;
-- năm triage label chuẩn: `docs/agents/triage-labels.md`;
-- single-context domain docs: `docs/agents/domain.md` và `CONTEXT.md`.
+- GitHub Issues: `.pi/docs/agents/issue-tracker.md`;
+- năm triage label chuẩn: `.pi/docs/agents/triage-labels.md`;
+- single-context domain docs: `.pi/docs/agents/domain.md` và `CONTEXT.md`.
 
 ## Bảng chọn nhanh
 
@@ -361,4 +361,4 @@ Không chạy live smoke test model/network/TUI trong quy trình tích hợp ho�
 npm run check
 ```
 
-Cổng này gồm fork-hash guard, typecheck, lint, format check, tests và package-content verification. Trước commit/push, kiểm tra thêm `git diff --check`, xác nhận `.pi/npm/` và `.pi-subagents/` vẫn bị ignore, không có credential, và `skills-lock.json`/root `package-lock.json` không bị thay đổi ngoài chủ đích.
+Chạy `node .pi/scripts/check-skill-forks.mjs`, các checks do project đích công bố, và `git diff --check`. Trước commit/push, xác nhận `.pi/npm/` và `.pi-subagents/` vẫn bị ignore, không có credential, và lockfiles của project không bị thay đổi ngoài chủ đích.

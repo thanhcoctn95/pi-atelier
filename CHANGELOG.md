@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Package reusable Pi workflows as a self-contained copyable `.pi/` bundle with policy injection, skills, manifests, docs, and validation.
+
 - Add project-local pinned Pi workflow packages with routed subagents and model-scoped role configuration.
 - Define specialized agent responsibilities, prompts, and tool boundaries for reconnaissance, research, planning, implementation, review, context building, advisory work, and delegation.
 - Bind supported Pi skills to project subagents with runtime artifacts, read-only mutation gates, and explicit no-auto-commit contracts.
