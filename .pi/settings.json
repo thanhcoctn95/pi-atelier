@@ -1,5 +1,6 @@
 {
 	"enableSkillCommands": true,
+	"defaultModel": "myapi/3party/gpt-5.6-terra",
 	"packages": [
 		"npm:pi-web-access@0.15.0",
 		"npm:@juicesharp/rpiv-ask-user-question@2.1.0",
@@ -8,7 +9,7 @@
 		"npm:@upstash/context7-pi@0.1.2"
 	],
 	"subagents": {
-		"defaultModel": "myapi/3party/deepseek-v4-flash",
+		"defaultModel": "myapi/3party/gpt-5.6-terra",
 		"modelScope": {
 			"enforce": true,
 			"allow": ["myapi/3party/gpt-5.6-terra", "myapi/3party/deepseek-v4-flash"]
