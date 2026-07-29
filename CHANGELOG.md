@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add the top-level `oracleAutonomousDecisions` setting. When enabled, injected project-local policy directs the read-only oracle to make a decisive technical recommendation for ordinary judgments and requires a runtime-owned, reviewable decision record under `.pi-subagents/decisions/`; parent orchestration still owns persistence, validation, and implementation approval.
+
 - Move starter project rules and domain context into the portable `.pi/` bundle so copying `.pi/` alone provides complete Pi guidance.
 
 - Package reusable Pi workflows as a self-contained copyable `.pi/` bundle with policy injection, skills, manifests, docs, and validation.

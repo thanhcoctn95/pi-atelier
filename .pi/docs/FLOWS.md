@@ -44,10 +44,10 @@ Mọi call `subagent` phải dùng `agentScope: "project"`, không per-run model
 | `worker` | Terra / high | fork | 30 phút | writer duy nhất |
 | `reviewer` | Terra / high | fresh | 20 phút | Standards hoặc Spec review |
 | `context-builder` | DeepSeek Flash / mặc định | fresh | 10 phút | context local + docs ngoài repo |
-| `oracle` | Terra / high | fork | 20 phút | decision/root-cause advisory |
+| `oracle` | Terra / high | fork | 20 phút | decision/root-cause advisory; tự chốt technical recommendation khi `oracleAutonomousDecisions: true` |
 | `delegate` | Terra / high | fresh | 20 phút | bounded read-only analysis |
 
-`advisor` và watchdog bị disable. Contract đầy đủ về single writer, mutation gate, artifact, retry, questionnaire, todo, Context7 và review nằm trong `.pi/docs/ORCHESTRATION.md`.
+`advisor` và watchdog bị disable. `oracleAutonomousDecisions` là boolean top-level, mặc định `false`; khi `true`, policy yêu cầu oracle tự chọn một technical recommendation trong boundary thường, còn parent/runtime persist và validate decision record với `outputMode: "file-only"` tại `.pi-subagents/decisions/<stable-run-id-or-timestamp>.md`. Contract đầy đủ về single writer, mutation gate, artifact, retry, questionnaire, todo, Context7 và review nằm trong `.pi/docs/ORCHESTRATION.md`.
 
 ## Main flow: idea → ship
 
@@ -77,7 +77,7 @@ Không workflow nào tự commit.
 - `/skill:code-review` tách hai `reviewer` fresh-context: Standards và Spec; không gộp hoặc rerank hai kết quả.
 - `/skill:context-builder` không là user workflow độc lập; parent dùng nó khi cần synthesis local + external docs trước planning.
 - `/skill:planner`, `/skill:scout`, `/skill:oracle`, `/skill:delegate` là role `subagent`, không phải public skill command.
-- Research artifact và report read-only nằm dưới `.pi-subagents/` do runtime quản lý. Deliverable trong repo chỉ được runtime persist theo path tuyệt đối đã khai báo và parent phải validate.
+- Research artifact và report read-only nằm dưới `.pi-subagents/` do runtime quản lý. Deliverable trong repo chỉ được runtime persist theo path tuyệt đối đã khai báo và parent phải validate. Khi `oracleAutonomousDecisions: true`, parent phải launch `oracle` với file-only runtime output tuyệt đối dưới `.pi-subagents/decisions/<stable-run-id-or-timestamp>.md`, sau đó validate đầy đủ các heading decision record; oracle không tự write artifact.
 - Với third-party API, `researcher` hoặc `context-builder` gọi `resolve-library-id` → `query-docs`; nếu thiếu coverage thì official-web fallback với `workflow: "none"`.
 - Flow từ ba bước dùng `todo`; nếu tool không có, ghi text checklist. Câu hỏi tương tác dùng `ask_user_question`; nếu không có thì hỏi một câu trong chat.
 - Trước mỗi batch read-only, parent capture status/diff; sau batch so sánh và fail closed khi có mutation ngoài runtime artifact/output đã khai báo.

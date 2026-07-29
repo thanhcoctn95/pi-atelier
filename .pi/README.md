@@ -22,6 +22,10 @@ The host must have provider access to `myapi/3party/gpt-5.6-terra` and `myapi/3p
 
 Copying `.pi/` alone installs this complete bundle, including starter project rules and domain context. Adapt `.pi/docs/PROJECT-RULES.md` to the target architecture, checks, release rules, protected paths, and domain conventions; replace `.pi/docs/CONTEXT.md` with the target domain context, or let the relevant skills create and update it. `.pi/extensions/workflow-policy.ts` injects both `.pi/docs/ORCHESTRATION.md` and `.pi/docs/PROJECT-RULES.md`; if either is missing or unreadable, it fail-closes mutation and integrated orchestration tools while preserving read-only diagnosis.
 
+### Oracle autonomous decisions
+
+`.pi/settings.json` accepts the optional top-level boolean `oracleAutonomousDecisions` (default `false`). When enabled, the injected policy requires the read-only `oracle` role to choose one technical recommendation for ordinary open technical judgments rather than contacting its supervisor. It must still escalate irreconcilable inherited requirements and product, security, legal, destructive, or irreversible choices. The parent launches the oracle with runtime-owned `outputMode: "file-only"` output at an absolute `.pi-subagents/decisions/<stable-run-id-or-timestamp>.md` path and validates the decision record; the oracle never writes project files or triggers implementation. The record includes options considered, selected decision, rationale/evidence, trade-offs, assumptions, confidence, rejected alternatives, and review/reversal triggers.
+
 The bundle validates all 22 complete skill trees, not only each `SKILL.md`: every portable regular file except `.DS_Store` is included in a deterministic tree hash. `.DS_Store` is intentionally excluded as non-portable OS metadata; empty directories and symlinks are not bundle integrity inputs. OpenAI harness metadata (`agents/openai.yaml`) is intentionally excluded because this bundle targets Pi; Pi discovers skill metadata from `SKILL.md`.
 
 Validate the portable bundle and target ignores with:
