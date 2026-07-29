@@ -47,6 +47,41 @@ function addSetDifference(label, expected, actual) {
 	}
 }
 
+function frame(value) {
+	const bytes = Buffer.isBuffer(value) ? value : Buffer.from(value, "utf8");
+	return Buffer.concat([Buffer.from(`${bytes.length}:`, "utf8"), bytes]);
+}
+
+function compareCodeUnits(left, right) {
+	if (left < right) return -1;
+	if (left > right) return 1;
+	return 0;
+}
+
+async function listRegularFiles(directory, relativeDirectory = "") {
+	const entries = await readdir(directory, { withFileTypes: true });
+	const files = [];
+	for (const entry of entries) {
+		const relativePath = relativeDirectory ? `${relativeDirectory}/${entry.name}` : entry.name;
+		const fullPath = path.join(directory, entry.name);
+		if (entry.isDirectory()) {
+			files.push(...(await listRegularFiles(fullPath, relativePath)));
+		} else if (entry.isFile() && entry.name !== ".DS_Store") {
+			files.push({ fullPath, relativePath });
+		}
+	}
+	return files.sort((left, right) => compareCodeUnits(left.relativePath, right.relativePath));
+}
+
+async function computeTreeHash(directory) {
+	const hash = createHash("sha256");
+	for (const file of await listRegularFiles(directory)) {
+		hash.update(frame(file.relativePath));
+		hash.update(frame(await readFile(file.fullPath)));
+	}
+	return hash.digest("hex");
+}
+
 async function discoverSkills() {
 	try {
 		const entries = await readdir(skillsRoot, { withFileTypes: true });
@@ -68,7 +103,7 @@ async function discoverSkills() {
 }
 
 const manifest = await readJson(manifestPath, "fork manifest");
-if (manifest.version !== 1) errors.push(`skill-forks.json: unsupported version ${String(manifest.version)}`);
+if (manifest.version !== 2) errors.push(`skill-forks.json: unsupported version ${String(manifest.version)}`);
 
 const lockPath = resolveRepoPath(manifest.lockFile, "skill-forks.json lockFile");
 const lock = lockPath ? await readJson(lockPath, "skills lock") : { skills: {} };
@@ -102,8 +137,9 @@ for (const name of forkNames) {
 	if (resolvedPath && seenPaths.has(resolvedPath)) errors.push(`${label}: duplicate path ${fork.path}`);
 	if (resolvedPath) seenPaths.add(resolvedPath);
 
-	if (!isSha256(fork.upstreamHash)) errors.push(`${label}: upstreamHash must be a lowercase SHA-256`);
-	if (!isSha256(fork.localHash)) errors.push(`${label}: localHash must be a lowercase SHA-256`);
+	for (const field of ["upstreamHash", "localHash", "treeHash"]) {
+		if (!isSha256(fork[field])) errors.push(`${label}: ${field} must be a lowercase SHA-256`);
+	}
 
 	const locked = lock.skills?.[name];
 	if (!locked) {
@@ -129,9 +165,11 @@ for (const name of forkNames) {
 		try {
 			const content = await readFile(resolvedPath);
 			const actual = createHash("sha256").update(content).digest("hex");
-			if (actual !== fork.localHash) {
-				errors.push(`${label}: local content drifted (manifest=${fork.localHash}, actual=${actual})`);
-			}
+			if (actual !== fork.localHash)
+				errors.push(`${label}: local SKILL.md drifted (manifest=${fork.localHash}, actual=${actual})`);
+			const actualTreeHash = await computeTreeHash(path.dirname(resolvedPath));
+			if (actualTreeHash !== fork.treeHash)
+				errors.push(`${label}: skill tree drifted (manifest=${fork.treeHash}, actual=${actualTreeHash})`);
 		} catch (error) {
 			errors.push(`${label}: cannot read ${fork.path}: ${error.message}`);
 		}
@@ -148,4 +186,4 @@ if (errors.length > 0) {
 	process.exit(1);
 }
 
-console.log("Skill forks verified (22 files)");
+console.log("Skill trees verified (22 skills)");

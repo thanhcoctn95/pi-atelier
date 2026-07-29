@@ -22,6 +22,8 @@ The host must have provider access to `myapi/3party/gpt-5.6-terra` and `myapi/3p
 
 The target root `AGENTS.md` remains optional and project-specific. Keep its architecture, checks, release rules, protected paths, and domain conventions there. The reusable orchestration policy is injected from `.pi/docs/ORCHESTRATION.md` by `.pi/extensions/workflow-policy.ts`.
 
+The bundle validates all 22 complete skill trees, not only each `SKILL.md`: every portable regular file except `.DS_Store` is included in a deterministic tree hash. `.DS_Store` is intentionally excluded as non-portable OS metadata; empty directories and symlinks are not bundle integrity inputs. OpenAI harness metadata (`agents/openai.yaml`) is intentionally excluded because this bundle targets Pi; Pi discovers skill metadata from `SKILL.md`.
+
 Validate the portable bundle and target ignores with:
 
 ```bash
