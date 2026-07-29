@@ -1,6 +1,6 @@
 # Agent Workflows
 
-Bundle này cung cấp workflow phát triển project-local cho Pi. Toàn bộ resource dùng chung nằm trong `.pi/`; quy ước kiến trúc, test, release và domain vẫn thuộc `AGENTS.md`/package files của project đích.
+Bundle này cung cấp workflow phát triển project-local cho Pi. Toàn bộ resource dùng chung nằm trong `.pi/`; quy ước kiến trúc, test, release và domain thuộc `.pi/docs/PROJECT-RULES.md`, `.pi/docs/CONTEXT.md` và package files của project đích.
 
 ## Khởi động
 

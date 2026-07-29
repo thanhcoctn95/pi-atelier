@@ -1,6 +1,6 @@
 # Portable Pi workflow policy
 
-This policy is injected by `.pi/extensions/workflow-policy.ts` for trusted projects that copy this bundle. It is generic: project-specific architecture, checks, release rules, protected files, and domain conventions remain in the target repository's root `AGENTS.md` and package files.
+This policy is injected with `.pi/docs/PROJECT-RULES.md` by `.pi/extensions/workflow-policy.ts` for trusted projects that copy this bundle. It is generic: target-specific architecture, checks, release rules, protected files, and domain conventions belong in `PROJECT-RULES.md` and package files.
 
 ## Project-local orchestration
 

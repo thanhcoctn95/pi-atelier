@@ -20,7 +20,7 @@ From the target repository root, trust the project, start Pi, then run:
 
 The host must have provider access to `myapi/3party/gpt-5.6-terra` and `myapi/3party/deepseek-v4-flash`. Do not copy or commit `.pi/npm/`, `.pi/sessions/`, or root `.pi-subagents/`; Pi recreates runtime directories after trust/reload. Confirm the target root `.gitignore` ignores `.pi-subagents/` before starting a workflow.
 
-The target root `AGENTS.md` remains optional and project-specific. Keep its architecture, checks, release rules, protected paths, and domain conventions there. The reusable orchestration policy is injected from `.pi/docs/ORCHESTRATION.md` by `.pi/extensions/workflow-policy.ts`.
+Copying `.pi/` alone installs this complete bundle, including starter project rules and domain context. Adapt `.pi/docs/PROJECT-RULES.md` to the target architecture, checks, release rules, protected paths, and domain conventions; replace `.pi/docs/CONTEXT.md` with the target domain context, or let the relevant skills create and update it. `.pi/extensions/workflow-policy.ts` injects both `.pi/docs/ORCHESTRATION.md` and `.pi/docs/PROJECT-RULES.md`; if either is missing or unreadable, it fail-closes mutation and integrated orchestration tools while preserving read-only diagnosis.
 
 The bundle validates all 22 complete skill trees, not only each `SKILL.md`: every portable regular file except `.DS_Store` is included in a deterministic tree hash. `.DS_Store` is intentionally excluded as non-portable OS metadata; empty directories and symlinks are not bundle integrity inputs. OpenAI harness metadata (`agents/openai.yaml`) is intentionally excluded because this bundle targets Pi; Pi discovers skill metadata from `SKILL.md`.
 

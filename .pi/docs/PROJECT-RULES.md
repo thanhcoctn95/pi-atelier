@@ -2,7 +2,7 @@ Use available agent skills proactively whenever a request matches their purpose;
 
 ## Portable Pi workflow policy
 
-This repository loads reusable project-local workflow policy from `.pi/docs/ORCHESTRATION.md`, injected by `.pi/extensions/workflow-policy.ts` after the project is trusted. Keep product-specific architecture, checks, release rules, and publishing instructions in this root `AGENTS.md`; the portable bundle must not be edited for project-only conventions.
+This repository loads reusable project-local workflow policy from `.pi/docs/ORCHESTRATION.md` and project-specific rules from this `.pi/docs/PROJECT-RULES.md`, both injected by `.pi/extensions/workflow-policy.ts` after the project is trusted. Keep architecture, checks, release rules, and publishing instructions here; keep reusable portable policy in `ORCHESTRATION.md`. When this bundle is copied, adapt `PROJECT-RULES.md` to the target project rather than changing the portable policy.
 
 ## Agent skills
 

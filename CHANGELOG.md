@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Move starter project rules and domain context into the portable `.pi/` bundle so copying `.pi/` alone provides complete Pi guidance.
+
 - Package reusable Pi workflows as a self-contained copyable `.pi/` bundle with policy injection, skills, manifests, docs, and validation.
 - Reduce portable workflow bundle file count and documentation while preserving all 22 workflows, and validate full skill-tree integrity.
 

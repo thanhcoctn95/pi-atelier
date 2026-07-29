@@ -2,7 +2,8 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { CONFIG_DIR_NAME, type ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
-const policyRelativePath = join(CONFIG_DIR_NAME, "docs", "ORCHESTRATION.md");
+const orchestrationRelativePath = join(CONFIG_DIR_NAME, "docs", "ORCHESTRATION.md");
+const projectRulesRelativePath = join(CONFIG_DIR_NAME, "docs", "PROJECT-RULES.md");
 const blockedTools = new Set([
 	"edit",
 	"write",
@@ -16,7 +17,9 @@ const blockedTools = new Set([
 type PolicyState = {
 	cwd: string;
 	available: boolean;
-	content?: string;
+	orchestration?: string;
+	projectRules?: string;
+	unavailablePath?: string;
 };
 
 export default function workflowPolicy(pi: ExtensionAPI) {
@@ -24,10 +27,20 @@ export default function workflowPolicy(pi: ExtensionAPI) {
 
 	const loadPolicy = async (cwd: string): Promise<PolicyState> => {
 		try {
-			const content = await readFile(join(cwd, policyRelativePath), "utf8");
-			return { cwd, available: true, content };
+			const [orchestration, projectRules] = await Promise.all([
+				readFile(join(cwd, orchestrationRelativePath), "utf8"),
+				readFile(join(cwd, projectRulesRelativePath), "utf8"),
+			]);
+			return { cwd, available: true, orchestration, projectRules };
 		} catch {
-			return { cwd, available: false };
+			for (const relativePath of [orchestrationRelativePath, projectRulesRelativePath]) {
+				try {
+					await readFile(join(cwd, relativePath), "utf8");
+				} catch {
+					return { cwd, available: false, unavailablePath: relativePath };
+				}
+			}
+			return { cwd, available: false, unavailablePath: "required policy documents" };
 		}
 	};
 
@@ -46,12 +59,12 @@ export default function workflowPolicy(pi: ExtensionAPI) {
 		const state = await getPolicyState(ctx.cwd);
 		if (state.available) {
 			return {
-				systemPrompt: `${event.systemPrompt}\n\n## Portable Pi Workflow Policy\n\n${state.content}`,
+				systemPrompt: `${event.systemPrompt}\n\n## Portable Pi Workflow Policy\n\n${state.orchestration}\n\n## Project Rules\n\n${state.projectRules}`,
 			};
 		}
 
 		return {
-			systemPrompt: `${event.systemPrompt}\n\n## Portable Pi Workflow Policy Unavailable\n\nThe trusted project's ${policyRelativePath} file is missing or unreadable. Mutation and integrated orchestration tools are blocked until the portable workflow policy is restored. Read-only tools remain available for diagnosis and restoration.`,
+			systemPrompt: `${event.systemPrompt}\n\n## Required Pi Guidance Unavailable\n\nThe trusted project's ${state.unavailablePath} file is missing or unreadable. Mutation and integrated orchestration tools are blocked until both ${orchestrationRelativePath} and ${projectRulesRelativePath} are restored. Read-only tools remain available for diagnosis and restoration.`,
 		};
 	});
 
@@ -62,7 +75,7 @@ export default function workflowPolicy(pi: ExtensionAPI) {
 		if (!state.available) {
 			return {
 				block: true,
-				reason: `Portable workflow policy missing or unreadable at ${policyRelativePath}; ${event.toolName} is blocked until it is restored.`,
+				reason: `Required Pi guidance missing or unreadable at ${state.unavailablePath}; ${event.toolName} is blocked until both ${orchestrationRelativePath} and ${projectRulesRelativePath} are restored.`,
 			};
 		}
 	});
